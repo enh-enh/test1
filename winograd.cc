@@ -437,12 +437,10 @@ void winograd_convolution(
 	image_transform(packed_image, V, vs, ti, vs.ic * vs.num_tiles);
 	// image_transform_cuda(packed_image, V, vs, ti, vs.ic * vs.num_tiles);
 
-#pragma omp parallel
 {
 	typedef float(*U_tensor_t)[ti.tile_in_w][us.oc][us.ic];
 	typedef float(*V_tensor_t)[ti.tile_in_w][vs.num_tiles][vs.ic];
 	typedef float(*M_tensor_t)[ti.tile_in_w][us.oc][vs.num_tiles];
-	#pragma omp for
 	for (int64_t h = 0; h < ti.tile_in_h; ++h) {
 		for (int64_t w = 0; w < ti.tile_in_w; ++w) {
 			U_tensor_t U_tensor = (U_tensor_t)U;
